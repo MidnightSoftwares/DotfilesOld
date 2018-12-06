@@ -1,5 +1,7 @@
 [user]
 	email = midnightsoftwares@gmail.com
 	name = Midnight Softwares
+[credential]
+	helper = store
 [core]
 	autocrlf = input

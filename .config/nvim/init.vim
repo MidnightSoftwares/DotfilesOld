@@ -1,12 +1,4 @@
 " ==================================================================================================
-" Notes:
-" ==================================================================================================
-"
-"   - Create custom color scheme.
-"   - Replace defx with a tmux terminal as a sidebar with a tree or something like this.
-
-
-" ==================================================================================================
 " Plugins
 " ==================================================================================================
 
@@ -20,20 +12,12 @@ Plug 'raghur/fruzzy', {
 Plug 'Shougo/denite.nvim', {
             \ 'do': ':UpdateRemotePlugins'
             \ }
-" Plug 'Shougo/deol.nvim', {
-"             \ 'do': ':UpdateRemotePlugins'
-"             \ }
-" Plug 'Shougo/defx.nvim', {
-"             \ 'do': ':UpdateRemotePlugins'
-"             \ }
 Plug 'itchyny/lightline.vim'
 
 " Version control
 Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit'
 Plug 'neoclide/denite-git'
-" Plug 'kristijanhusak/defx-git'
-" Plug 'airblade/vim-gitgutter'
 Plug 'mhinz/vim-signify'
 
 " Editing
@@ -70,9 +54,6 @@ Plug 'Shougo/deoplete.nvim', {
             \ }
 Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/context_filetype.vim'
-" Plug 'wbthomason/buildit.nvim', {
-"             \ 'do': ':UpdateRemotePlugins'
-"             \ }
 
 " Color schemes
 Plug 'rafi/awesome-vim-colorschemes'
@@ -151,17 +132,17 @@ set grepformat=%f:%l:%c:%m,%f:%l:%m
 set updatetime=300
 
 " Color scheme
-" set termguicolors
+set termguicolors
 
 " set background=light
 " colorscheme hemisu
 " colorscheme macvim-light
 
 set background=dark
-colorscheme pencil
+" colorscheme pencil
 " colorscheme codedark
 " colorscheme minimalist
-" colorscheme afterglow
+colorscheme afterglow
 " colorscheme hybrid_reverse
 " colorscheme jellybeans
 " colorscheme iceberg
@@ -209,103 +190,8 @@ call denite#custom#var('grep', 'final_opts', [])
 call denite#custom#source('grep', 'args', ['', '', '!']) " Interactive grep
 call denite#custom#source('line', 'args', ['buffers', 'noempty']) " Lines for all buffers
 
-" defx
-" let s:defx_enabled = 1
-" let s:defx_prev_cwd = ''
-
-" function! s:defx_config() abort
-"     setlocal nonumber
-"     setlocal norelativenumber
-"     setlocal nocursorline
-
-"     call <SID>defx_mappings()
-" endfunction
-
-" function! s:defx_create() abort
-"     Defx
-"                 \ -buffer-name=defx
-"                 \ -columns=git:mark:filename:type
-"                 \ -direction=topleft
-"                 \ -split=vertical
-"                 \ -winwidth=30
-" endfunction
-
-" function! s:defx_quit() abort
-"     let winnr = bufwinnr('defx')
-"     if winnr > 0
-"         exec winnr . "wincmd q"
-"     endif
-" endfunction
-
-" function! s:defx_check_create() abort
-"     let cwd = getcwd()
-"     let winnr = bufwinnr('defx')
-"     if cwd != s:defx_prev_cwd || winnr <= 0
-"         let s:defx_prev_cwd = cwd
-"         call <SID>defx_create()
-"         return 1
-"     endif
-"     return 0
-" endfunction
-
-" function! s:defx_focus() abort
-"     if !s:defx_enabled
-"         return
-"     endif
-"     if !exists('b:defx')
-"         if <SID>defx_check_create() == 0
-"             exec bufwinnr('defx') . "wincmd w"
-"         endif
-"     else
-"         wincmd p
-"     endif
-" endfunction
-
-" function! s:defx_toggle() abort
-"     if s:defx_enabled
-"         let s:defx_enabled = 0
-"         call <SID>defx_quit()
-"     else
-"         let s:defx_enabled = 1
-"         call <SID>defx_check_create()
-"     endif
-" endfunction
-
-" function! s:defx_update() abort
-"     if s:defx_enabled
-"         if !exists('b:defx')
-"             if <SID>defx_check_create()
-"                 wincmd p
-"             endif
-"         endif
-"     else
-"         call <SID>defx_quit()
-"     endif
-" endfunction
-
-" augroup defx_aug
-"     autocmd!
-"     autocmd FileType defx call <SID>defx_config()
-
-"     autocmd BufEnter * call <SID>defx_update()
-"     autocmd BufWinEnter * call <SID>defx_update()
-
-"     autocmd VimEnter * wincmd l
-" augroup END
-
 " magit
 let g:magit_discard_untracked_do_delete = 1
-
-" defx_git
-" let g:defx_git#show_ignored = 1
-
-" GitGutter
-" let g:gitgutter_map_keys = 0
-
-" omap ic <Plug>GitGutterTextObjectInnerPending
-" omap ac <Plug>GitGutterTextObjectOuterPending
-" xmap ic <Plug>GitGutterTextObjectInnerVisual
-" xmap ac <Plug>GitGutterTextObjectOuterVisual
 
 " signify
 let g:signify_vcs_list = ['git']
@@ -413,26 +299,9 @@ let g:deoplete#enable_at_startup = 1
 
 call deoplete#custom#option('smart_case', v:true)
 
-" function! s:deoplete_last_char_is_space() abort
-"     let col = col('.') - 1
-"     return !col || getline('.')[col - 1] =~ "\s"
-" endfunction
-
 function! s:deoplete_close_popup_cr() abort
     return deoplete#close_popup()."\<CR>"
 endfunction
-
-" inoremap <silent> <expr> <TAB>
-"             \ pumvisible() ? "\<C-n>" :
-"             \ <SID>deoplete_last_char_is_space() ? "\<TAB>" :
-"             \ deoplete#mappings#manual_complete()
-
-" inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-" inoremap <expr> <C-h> deoplete#smart_close_popup()."\<C-h>"
-" inoremap <expr> <BS>  deoplete#smart_close_popup()."\<C-h>"
-
-" inoremap <expr> <ESC> pumvisible() ? deoplete#close_popup() : "\<ESC>"
 
 inoremap <silent> <CR> <C-r>=<SID>deoplete_close_popup_cr()<CR>
 
@@ -452,34 +321,6 @@ let g:maplocalleader = ' m'
 " Denite
 call denite#custom#map('insert', '<C-n>',  '<denite:move_to_next_line>', 'noremap')
 call denite#custom#map('insert', '<C-p>',  '<denite:move_to_previous_line>', 'noremap')
-
-" defx
-" function! s:defx_mappings() abort
-"     nnoremap <buffer> <silent> <expr> <CR>    defx#do_action('open', 'vsplit')
-"     nnoremap <buffer> <silent> <expr> c       defx#do_action('copy')
-"     nnoremap <buffer> <silent> <expr> m       defx#do_action('move')
-"     nnoremap <buffer> <silent> <expr> p       defx#do_action('paste')
-"     nnoremap <buffer> <silent> <expr> l       defx#do_action('open', 'vsplit')
-"     nnoremap <buffer> <silent> <expr> P       defx#do_action('open', 'pedit')
-"     nnoremap <buffer> <silent> <expr> K       defx#do_action('new_directory')
-"     nnoremap <buffer> <silent> <expr> N       defx#do_action('new_file')
-"     nnoremap <buffer> <silent> <expr> d       defx#do_action('remove')
-"     nnoremap <buffer> <silent> <expr> r       defx#do_action('rename')
-"     nnoremap <buffer> <silent> <expr> x       defx#do_action('execute_system')
-"     nnoremap <buffer> <silent> <expr> yy      defx#do_action('yank_path')
-"     nnoremap <buffer> <silent> <expr> .       defx#do_action('toggle_ignored_files')
-"     nnoremap <buffer> <silent> <expr> h       defx#do_action('cd', ['..'])
-"     nnoremap <buffer> <silent> <expr> ~       defx#do_action('cd')
-"     nnoremap <buffer> <silent> <expr> q       defx#do_action('quit')
-"     nnoremap <buffer> <silent> <expr> <Space> defx#do_action('toggle_select') . 'j'
-"     nnoremap <buffer> <silent> <expr> *       defx#do_action('toggle_select_all')
-"     nnoremap <buffer> <silent> <expr> j       line('.') == line('$') ? 'gg' : 'j'
-"     nnoremap <buffer> <silent> <expr> k       line('.') == 1 ? 'G' : 'k'
-"     nnoremap <buffer> <silent> <expr> <C-l>   defx#do_action('redraw')
-"     nnoremap <buffer> <silent> <expr> <C-g>   defx#do_action('print')
-"     nnoremap <buffer> <silent> <expr> cd      defx#do_action('change_vim_cwd')
-" endfunction
-
 
 " LanguageClient
 function! s:LanguageClient_mappings() abort
@@ -515,9 +356,6 @@ nnoremap <silent> <leader>fV :source $HOME/.config/nvim/init.vim<CR>
 nnoremap <silent> <leader>fs :write<CR>
 nnoremap <silent> <leader>fS :wall<CR>
 
-" nnoremap <silent> <leader>ft :call <SID>defx_focus()<CR>
-" nnoremap <silent> <leader>fT :call <SID>defx_toggle()<CR>
-
 let g:better_whitespace_operator = '<leader>fwt'
 nnoremap <silent> <leader>fwn :NextTrailingWhitespace<CR>
 nnoremap <silent> <leader>fwp :PrevTrailingWhitespace<CR>
@@ -541,12 +379,6 @@ nnoremap <silent> <leader>gl :Denite gitlog<CR>
 nnoremap <silent> <leader>gL :Denite gitlog:all<CR>
 nnoremap <silent> <leader>gc :Denite gitchanged<CR>
 nnoremap <silent> <leader>gb :Denite gitbranch<CR>
-
-" nmap <leader>gj <Plug>GitGutterNextHunk
-" nmap <leader>gk <Plug>GitGutterPrevHunk
-" nmap <leader>ghp <Plug>GitGutterPreviewHunk
-" nmap <leader>ghs <Plug>GitGutterStageHunk
-" nmap <leader>ghu <Plug>GitGutterUndoHunk
 
 nmap <leader>gj <plug>(signify-next-hunk)
 nmap <leader>gk <plug>(signify-prev-hunk)

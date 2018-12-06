@@ -34,3 +34,7 @@ plugins=(
 
 # Oh My Zsh
 source $ZSH/oh-my-zsh.sh
+
+# NPM
+PATH="$HOME/.node_modules/bin:$PATH"
+export npm_config_prefix=~/.node_modules
